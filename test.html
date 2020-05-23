@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="./test.js"></script> -->
+    <script type="text/javascript">
+    //-------Json 对象的扩展-----
+    var  obj ={a:"aaa",b:"bbb"};
+    obj = JSON.stringify(obj) //对象转字符串数组对象
+   // console.info(typeof obj)
+
+    obj = JSON.parse(obj);//字符串转对象
+   // console.info(typeof obj)
+
+   //--------Object对象的扩展-------
+   //Object.create 创建新的对象将老对象的属性方法，作为自己的原型链方法，并且可以扩展新的属性
+    var obj1 = Object.create(obj,{sex:{
+        value:"男",
+        enumerable:true,
+        writable:true,
+        configurable:true
+    }})
+    obj1.sex = "女";
+    // for (var o in obj1) {        
+    //     console.info(o,obj1[o])     
+    // }
+   // delete obj1.sex;  
+   // console.info(obj1)
+    var obj2 ={firstName:"wang",lastName:"ze"}
+    //Object.defineProperties 扩展新的属性,添加的属性有get /set 方法
+     obj2  = Object.defineProperties(obj2,{
+         fullName:{
+             get:function(){
+                 console.info("call get")
+                 return this.firstName+"|"+this.lastName
+             },
+             set:function(data){
+                 console.info("call set")
+                 var sp = data.split("|");
+                 this.firstName=sp[0];
+                 this.lastName =sp[1];
+
+             }
+         }
+     })
+
+    // console.info(obj2.fullName)
+    // obj2.fullName='xiao|ping'
+    // console.info(obj2.fullName)
+     console.info(obj2)
+    
+    var obj3 = {
+        firstName:"wang",
+        lastName:"ze",
+        get fullName(){
+            return this.firstName+"|"+this.lastName
+        },
+        set fullName(data){
+            console.info("call set")
+            var sp = data.split("|");
+            this.firstName=sp[0];
+            this.lastName =sp[1];
+        }
+    }
+    obj3.fullName="xiao|ping"
+    console.info(obj3)
+    
+  
+    //------数组的扩展-------
+    // 1、Array.prototype.indexOf()  //返回第一次出现的索引值
+    // 2、Array.prototype.lastIndexOf() 返回最后一次出现的索引值
+    // 3、Array.prototype.map(function(item,index){}) 返回处理过后的数组
+    // 4、Array.prototype.foreach(function(item,index){}) 数组循环
+    // 5、Array.prototype.filter(function(item,index){}) 返回满足过滤条件的数组
+   
+/*
+    var arr =[1,2,3,5,7,3,4,5]
+
+    console.info(arr.indexOf(3))
+    console.info(arr.lastIndexOf(3))
+    var arr1 = arr.map(function(item,index){
+        return item+10
+    })
+    console.info(arr1)
+    arr1.forEach(function(item,index){
+        console.info(item,index)
+    })
+    
+    var arr2 = arr.filter(function(item,index){
+       return item>3
+    })
+
+    console.info(arr2)
+
+    //call/apply/bind 用法详解
+    //call/apply 是立即执行，将被调用的方法的this指向调用它的对象
+    //bind 不立即执行，是将函数返回，通常是给回调函数执行this时使用
+    var obj4 ={name:"wz",age:37}
+    var foo  = function(data){
+        console.info(this,data)
+    }
+
+    foo.call(obj4,11)
+    foo.apply(obj4,[22])
+    foo.bind(obj4,33)()
+
+    setTimeout(function(){
+        console.info(this)
+    }, 2000);
+    setTimeout(function(){
+        console.info("bind",this)
+    }.bind(obj4), 2000);
+
+
+//------变量的解构赋值------
+  //对象解构赋值
+  let obj5 = {username:"wz",age:33}
+  let {username,age} = obj5
+  console.info(username,age)
+
+ //数组解构赋值
+  let arr3 = [1,2,3,4,5,6]
+  let [,,a,b] =arr3
+  console.info(a,b)
+
+  //函数参数解构
+  let obj6 ={username1:"wz1",age1:55}
+    let fn =function({username1,age1}){
+        console.info(username1,age1)
+    }
+    fn(obj6)
+
+   //-----模板字符串------
+   let str = '我是'+username+',年龄'+age
+   let str1 = `我是${username},年龄${age}`
+   console.info(str);
+   console.info(str1)
+
+   //-----对象的简写方式------
+    let username2="wz"
+    let age2=66
+    let obj7 = {
+        username2,
+        age2,
+        getName(){
+            console.info("getName")
+        }
+    }
+    console.info(obj7.username2,obj7.age2)
+    obj7.getName()
+    
+    //箭头函数
+
+    let  fn2 = function(a,b){
+        return a*b
+    }
+    console.info(fn2(2,3))
+    let  fn3 = (a,b) => a*b
+    let  fn4 = b => console.info(b)
+  
+    console.info(fn3(2,3))
+    fn4(5)
+
+
+   //-----三点运算符------
+    //1、可变参数 用来代替 arguments 但比arguments 更灵活，是真数组
+   let fn1 = function(a,...value) {
+       console.info(arguments);//假数组
+       console.info(value)//真数组
+
+   }
+   fn1(1,2,3,4,5,6)
+
+   //2、扩展运算符
+   let arr4=[2,3,4]
+   let arr5 = [1,...arr4,5,6]
+   console.info(arr5)
+   console.info(...arr5) //会直接输出 1,2,3,4,5,6 字符串
+*/
+
+
+   //-----promise对象原来讲解------
+
+    let promise = new Promise((resolve,reject)=>{
+        //初始化 promise 状态为pending
+        if (true) {
+            resolve("成功了")  //成功 promise 状态为fullfilled
+        } else {
+            reject("失败了") //失败 promise 状态为 rejected
+        }
+    })
+
+    promise.then((value)=>{
+        console.info(value)
+    },(msg)=>{
+        console.info(msg)
+    })
+
+
+
+
+
+   //-----Iterator 接口机制------
+   //自己模拟迭代器的原理实现
+   function MyIterator(arr6){ //函数里面定义函数，并且 函数方法在外部调用，形成闭包的作用
+       let nextIndex = 0; 
+        return {
+            next:function(){
+                return arr6.length>nextIndex?{value:arr6[nextIndex++],done:false}:{value:undefined,done:true};
+            }
+        }
+   }
+
+    let arr6 = [1,2,3]
+    let iteratorObj = MyIterator(arr6);
+    console.info(iteratorObj.next())
+    console.info(iteratorObj.next())
+    console.info(iteratorObj.next())
+    console.info(iteratorObj.next())
+
+   //将itertor 接口部部署到指定的数据类型上，对应的数据类型就可以用 for...of 方法循环遍历
+   //主要类型有 数组、字符串、arguments、map、set
+
+    for(let i of arr6){
+        console.info(i)
+    }
+    let str = "abcdef";
+    for(let i of str){
+        console.info(i)
+    }
+    function fn5(a,b,c,d){
+        for (const i of arguments) {
+            console.info(i)
+        }
+    }
+    fn5(1,2,3,4)
+
+   //-----Generator 函数应用------
+   /*
+    function getNew(url){
+        $.get("url",function(data){
+            let url = "http://www.news.com"+data.commentUrl
+            sm.next(url)
+
+        })
+    }
+
+    function* setXML(){
+        let url = yield getNew("http://www.news.com? id=3")
+        yield getNew(url)
+    }
+
+    let sm = setXML();
+    sm.next();
+ */
+
+    function getNew(url){
+        console.info(url);
+        setTimeout(() => {
+            SX.next("http://www.news.com?dtailId=4"); 
+        }, 2000);
+    }
+
+    function* setXML(){
+        let url = yield getNew("http://www.news.com? id=3")
+        yield getNew(url)
+    }
+
+    let SX = setXML();
+    SX.next();
+
+//-----class 类使用详解------
+
+    //ES5的类定义方法
+    function Person(name,age){
+        this.name =name;
+        this.age = age;
+        this.showName =function(){
+            console.info(this.name,this.age)
+        }
+    }
+
+    let p1 = new Person("wade",39);
+    p1.showName();
+
+    //class 类定义方式
+    class Person1{
+        constructor(name,age){
+            this.name= name;
+            this.age = age;
+        }
+        showName(){
+            console.info(this.name,this.age)
+        }
+    }
+
+    let p2 = new Person1("zhangshan",55)
+    p2.showName()
+
+    class SunPerson extends Person1{
+        constructor(name,age,salay){
+            super(name,age)
+            this.salay = salay
+        }
+        showName(){
+            console.info(this.name,this.age,this.salay)
+        }
+    }
+
+    let p3 = new SunPerson("lisi",45,10000000);
+    p3.showName();
+
+    //-----字符串扩展------
+    // 1、includes(s) 判断是包含指定的字符
+    // 2、startsWith(s)  判断是否已指定字符串开头
+    // 3、endsWith(s) 判断是否已指定字符串结尾
+    // 4、repeat(n) 重复指定次数
+    let str1 = "asdfgire";
+    console.info(str1.includes("s"))//  true
+    console.info(str1.startsWith("a")) //true
+    console.info(str1.endsWith("e")) //true
+    console.info(str1.repeat(2)) //asdfgireasdfgire
+
+    //-----数值扩展------
+    console.info("-----------------------")  //false
+    // 1、二进制与八进制表达法：二进制 0b,八进制 0o
+    // 2、Number.isFinite(i) 判断是否有限大的数
+    // 3、Number.isNaN(i)  判读是否为NaN,该方法不会转换，而window 的 isNaN()会先做数组类型转换进行转换
+    // 4、Number.isInteger(i) 判断是否是整数
+    // 5、Number.parseInt(str) 将字符串转换回数字
+    // 6、Math.trunc() 去除小数部分
+    
+    console.info(Number.isFinite(Infinity))  //false
+    console.info(Number.isNaN("a")) //false
+    console.info(Number.isInteger("5"))//false
+    console.info(Number.parseInt("aa33"))//NaN
+    console.info(Math.trunc("1.20")) //1
+
+    console.info(isNaN("qq")) //true 
+    console.info(isNaN("1")) //false
+    console.info(isNaN("1a")) //true
+    console.info(Number.isNaN("1a")) //false
+    console.info(Number.isNaN(Number.parseInt("aa33"))) //true
+
+  //-----数组方法扩展------
+    // 1、Array.from() 将伪数组转换为真数组
+    // 2、Array.of() 将一系列数值转换为数组
+    // 3、find(function(item,index,arr){}) 返回数组中满足中第一个满足条件true的元素
+    // 4、findByIndex(function(item,index,arr){})返回数组中第一个满足条件true的元素下标
+
+
+//     let btns1 = document.getElementsByTagName("button")
+//     btns1.forEach((item,index) => {
+//         console.info(item,index)
+//     });
+//     let btns2 = Array.from(btns1);
+//    btns2.forEach((item,index)=>{
+//         console.info(item)
+//    })
+
+
+        console.info(Array.of(1,2,3,4,5,6,7))
+        let arr7 = [1,2,4,6,8,9,3];
+        let a = arr7.find(function(item,index){
+            return item>4;
+        })
+        console.info(a)
+
+        let i = arr7.findIndex(item=>item>4);
+        console.info(i);
+
+  //-----对象方法扩展------
+        // 1、Object.is() 判断两个数据是否完全相等，原理是以字符串比对
+        // 2、Object.assign(target,source1,source2.....)  将源对象的属性复制到目标对象
+        // 3、直接操作_proto_属性 ，将强制变成该对象的父类，属性方法将被继承下来
+        console.info(0==-0) //true
+        console.info(NaN==NaN) //false
+        console.info(Object.is(0,-0)) //false
+        console.info(Object.is(NaN,NaN))// true
+
+        let obj8 ={}
+        let obj9={username:"weibo",age:40}
+        let obj10 = {sex:"男"}
+        console.info(Object.assign(obj8,obj9,obj10))
+
+        let obj11 ={}
+        let obj12 ={username:"ww",age:40,getName(){console.info(this.username)}}
+
+        obj11.__proto__ = obj12
+
+        console.info(obj11)
+        console.info(obj11.username)
+        obj11.getName()
+
+        let arr8 =[1,2,2,3,4,5]
+        let arr9 = arr8
+        arr9[1]=5
+
+        console.info(arr8,arr9)
+
+
+       // Array,Null
+        //typeof  String,Number,Boolean,Object,Function,Undefined
+        let arr13 = [];
+        console.info(Object.prototype.toString(arr13))
+
+        
+
+
+function getkey(x){
+    return x+3;
+}
+const obj44 = {
+  id: 5,
+  name: 'San Francisco',
+  [getkey(7)]: true,
+};
+ 
+
+console.info(obj44)
+
+
+
+    </script> 
+</head>
+
+
+
+<body>
+<div><button >bb</button></div>
+<div><button >cc</button></div>
+<div><button >dd</button></div>
+</body>
+<script type="text/javascript">
+    var btns = document.getElementsByTagName("button")
+    //闭包的方式实现执行块
+    // for (var i = 0; i < btns.length; i++) {
+    //     var  btn = btns[i];
+    //     (function(i){
+    //         btn.onclick =function(){
+    //             alert(i)
+    //         }
+    //     })(i)
+        
+    // }
+
+    //let 声明会自动形成执行块 
+    // for (let i = 0; i < btns.length; i++) {
+    // var  btn = btns[i];
+    //     btn.onclick =function(){
+    //     alert(i)
+    // }
+    //}
+
+</script>
+</html>
+
